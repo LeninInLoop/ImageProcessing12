@@ -38,7 +38,7 @@ class ImageUtils:
         if dtype == 'uint8':
             return normalized_image.astype(np.uint8)
         else:
-            return normalized_image.astype(np.float32)
+            return nomalized_image.astype(np.float32)
 
     @staticmethod
     def save_image(path: str, img: np.ndarray):
@@ -236,7 +236,10 @@ def main():
         zero_D = np.zeros_like(cD)
 
         approximation_only_coefficients = cA, (zero_H, zero_V, zero_D)
-        approximation_only_image = WaveletUtils.idwt2(approximation_only_coefficients, mother_wave=wavelet)
+        approximation_only_image = WaveletUtils.idwt2(
+            approximation_only_coefficients,
+            mother_wave=wavelet
+        )
 
         title_processed = f"1-Level Approximation Only ({wavelet})"
         Helpers.plot_comparison(
@@ -260,7 +263,11 @@ def main():
         print(
             f"\n{BColors.OkBLUE}{BColors.BOLD}STAGE 3: 2-Level Wavelet Transform with Zero Detail Coefficients{BColors.ENDC}")
 
-        wavelet_coefficients_2level = WaveletUtils.wavedec2(original_image, mother_wave=wavelet, level=2)
+        wavelet_coefficients_2level = WaveletUtils.wavedec2(
+            original_image,
+            mother_wave=wavelet,
+            level=2
+        )
         new_coeffs = [wavelet_coefficients_2level[0]]
 
         level_2_zeros = tuple(np.zeros_like(detail) for detail in wavelet_coefficients_2level[1])
@@ -269,7 +276,10 @@ def main():
         level_1_zeros = tuple(np.zeros_like(detail) for detail in wavelet_coefficients_2level[2])
         new_coeffs.append(level_1_zeros)
 
-        approximation_only_image_2level = WaveletUtils.waverec2(new_coeffs, mother_wave=wavelet)
+        approximation_only_image_2level = WaveletUtils.waverec2(
+            new_coeffs,
+            mother_wave=wavelet
+        )
 
         title_processed = f"2-Level Approximation Only ({wavelet})"
         Helpers.plot_comparison(
