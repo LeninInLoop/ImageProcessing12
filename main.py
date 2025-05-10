@@ -38,7 +38,7 @@ class ImageUtils:
         if dtype == 'uint8':
             return normalized_image.astype(np.uint8)
         else:
-            return nomalized_image.astype(np.float32)
+            return normalized_image.astype(np.float32)
 
     @staticmethod
     def save_image(path: str, img: np.ndarray):
